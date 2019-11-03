@@ -3,22 +3,24 @@ import {Table } from 'reactstrap'
 import { 
     Container,
 	Row, Col, 
-	Card,
-	// CardHeader, 
+	Card, 
 	CardBody, 
     Button,
     CardFooter,
     CardHeader,
-	FormInput,
-	ModalHeader,
-	ModalBody,
-	// ModalFooter,
-	FormSelect,
-	FormFeedback
 } from "shards-react";
+import {
+    Collapse,
+    Navbar,
+    NavbarToggler,
+    NavbarBrand,
+    Nav,
+    NavItem,
+    NavLink, } from 'reactstrap';
 import { connect } from 'react-redux'
-import { getUsers } from '../actions';
-import './Main.css'
+import { getUsers, getPostData } from '../actions';
+// import './Main.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 class Main extends Component {
     constructor(props) {
         super(props);
@@ -27,6 +29,10 @@ class Main extends Component {
     
     handleClick(){
         this.props.getuser()
+    }
+
+    componentDidMount() {
+        this.props.getPost()
     }
 
     showUsers(){
@@ -83,26 +89,53 @@ class Main extends Component {
         )
     }
 
+    showpost(){
+        const { Posts } = this.props
+        return(
+           <div>
+           <h1 style={{textAlign:'center'}} >Daily Post</h1>
+           {
+            Posts 
+            ? Posts.map((item, index)=>(
+                <Card key={index} style={{marginTop:'10px', marginBottom:'20px', marginLeft:'40px'}} >
+                <CardHeader>
+                    <h3>{item.title}</h3>
+                </CardHeader>
+                <CardBody className="text-justify text-capitalize" style={{ marginBottom:'5px'}}>
+                    <h5>
+                    {item.body}</h5>
+                </CardBody>
+                </Card>
+            ))
+            :
+            null
+        }
+           </div>
+        )
+    }
+
     render() {
         const { Users} = this.props;
         console.log('users', Users)
         return (
-            <Container fluid className="main-content-container px-4">
+            <Container fluid>
+            <Navbar color="light" light expand="md">
+        <NavbarBrand href="/">Post Servers</NavbarBrand>
+        <NavbarToggler  />
+        <Collapse isOpen={true} navbar>
+          <Nav className="ml-auto" navbar>
+            <NavItem>
+              <NavLink href="/components/">Components</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
+            </NavItem>
+          </Nav>
+        </Collapse>
+      </Navbar>
 					<div> 
-					<Row className="mt-2 mb-2">
-						<Col>
-							<Card small className="m-2">
-								<CardBody >
-									{this.showUsers()}
-                                </CardBody>
-                                <CardFooter>
-                                    <Button style={{background:'greenYellow', size:'40px', marginTop:'20px'}} onClick={() => this.handleClick()} >Get User</Button>
-                                </CardFooter>
-							</Card>
-						</Col>
-					</Row>
-						
-					</div>
+                        {this.showpost()}
+                    </div>
 			</Container>
         );
     }
@@ -110,13 +143,16 @@ class Main extends Component {
 
 function mapDispatchToProps(dispatch){
     return{
-        getuser: () => dispatch(getUsers())
+        getuser: () => dispatch(getUsers()),
+        getPost: () => dispatch(getPostData())
     }
 }
 
 function mapStateToProps(state){
+    console.log('state',state)
     return{
-        Users: state.json
+        Users: state.json,
+        Posts: state.post
     }
 }
 

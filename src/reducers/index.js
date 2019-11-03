@@ -5,6 +5,10 @@ const reducer = (state = {}, action) => {
       return { ...state, loading: true };
     case 'user_RECEIVED':
       return { ...state, json: action.json ,loading: false }
+    case 'GET_POSTS':
+      return {...state, loading: true }
+      case 'post_RECEIVED':
+      return { ...state, post: action.post ,loading: false }
     default:
       return state;
   }

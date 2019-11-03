@@ -1,14 +1,17 @@
-import React from 'react';
-import Button from '../containers/Button';
-import NewsItem from '../containers/NewsItem'
-import Loading from '../containers/Loading'
-import Main from '../containers/Main'
+import React from "react";
+// import { BrowserRouter as Router, Route } from "react-router-dom";
 
-let App = () => (
-  <div>
-    <Main />
-  </div>
-);
+// import routes from '../routes'
+// import withTracker from "./withTracker";
 
+import "bootstrap/dist/css/bootstrap.min.css";
+// import "./shards-dashboard/styles/shards-dashboards.1.1.0.min.css";
+import Main from "../containers/Main";
 
-export default App;
+export default class App extends React.Component{
+  render(){
+    return(
+      <Main />
+    )
+  }
+}

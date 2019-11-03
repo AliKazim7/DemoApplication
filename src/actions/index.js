@@ -6,3 +6,7 @@ export const getNews = () => ({
 export const getUsers = () => ({
   type:'GET_USERS'
 })
+
+export const getPostData = () => ({
+  type:'GET_POSTS'
+})
