@@ -1,9 +1,10 @@
 const reducer = (state = {}, action) => {
+  console.log('state action', action)
   switch (action.type) {
-    case 'GET_NEWS':
+    case 'GET_USERS':
       return { ...state, loading: true };
-    case 'NEWS_RECEIVED':
-      return { ...state, news: action.json[0], loading: false }
+    case 'user_RECEIVED':
+      return { ...state, json: action.json ,loading: false }
     default:
       return state;
   }
